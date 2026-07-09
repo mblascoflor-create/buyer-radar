@@ -1,0 +1,25 @@
+name: Buyer Radar
+
+on:
+  schedule:
+    # Se ejecuta cada 6 horas, automaticamente, sin que nadie lo lance a mano
+    - cron: "0 */6 * * *"
+  workflow_dispatch: {}   # tambien permite lanzarlo a mano desde GitHub si quieres probarlo
+
+jobs:
+  run-radar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+      - name: Ejecutar Buyer Radar
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          DIGEST_TO_EMAIL: ${{ secrets.DIGEST_TO_EMAIL }}
+          TOPICS: ${{ vars.TOPICS }}
+        run: python main.py
