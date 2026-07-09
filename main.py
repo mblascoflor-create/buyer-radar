@@ -97,7 +97,7 @@ def send_digest_email(digest_text):
         "https://api.resend.com/emails",
         headers={"Authorization": f"Bearer {resend_key}"},
         json={
-            "from": "Buyer Radar <radar@resend.dev>",
+            "from": "Buyer Radar <onboarding@resend.dev>",
             "to": [to_email],
             "subject": "Buyer Radar - nuevas señales de compra",
             "text": digest_text,
